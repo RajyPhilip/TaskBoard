@@ -100,22 +100,17 @@ const Home = () => {
       <DragDropContext onDragEnd={handleDrag}>
         <div className="create-list-form-container">
           <form className="create-list-form" onSubmit={handleListCreation}>
-            <input
-              type="text"
-              placeholder="Create list"
-              ref={title}
-            />
-            <button className="createList-btn
-" type="submit">Create List</button>
-</form>
-</div>
-<div className="List-main-container">
-{list.map((item, index) => (
-<List key={item._id} fullList={list} list={item} setList={setList} index={index} />
-))}
+            <input type="text" placeholder="Create list" ref={title} />
+            <button className="createList-btn" type="submit">Create List</button>
+          </form>
+        </div>
+        <div className="List-main-container">
+          {list.map((item, index) => (
+            <List key={item._id} fullList={list} list={item} setList={setList} index={index} />
+          ))}
         </div>
       </DragDropContext>
-</>
+    </>
 );
 };
 
