@@ -81,6 +81,10 @@ module.exports.createTask = async (req, res, next) => {
                     list:req.params.listID
                 });
                 await task.save();
+                const list = await List.findOne({_id:req.params.listID})
+                list.taskOrder.push(task)
+                await list.save();
+                
                 return res.status(201).json({
                     message: 'Task Created Successfully ',
                     data:task
@@ -114,3 +118,26 @@ module.exports.getAllTaskOfList =async (req, res, next) => {
         next(error);
     }
 }
+// update order
+module.exports.updateTaskOrder = async (req, res, next) => {
+    try {
+        console.log('reeeaachhed')
+        const { sourceListId, destinationListId, sourceOrder, destinationOrder } = req.body;
+        console.log("#REQ>BODY",req.body)
+        
+      // Update the source list's task order
+        const source = await List.findById({_id : sourceListId});
+        source.taskOrder = sourceOrder;
+    
+     // Update the destination list's task order
+        const dest = await List.findByIdAndUpdate(destinationListId);
+        dest.taskOrder = destinationOrder;
+    
+        await source.save();
+        await dest.save();
+    
+        return res.status(200).json({ success: true, message: "Task order updated successfully" });
+    } catch (error) {
+        next(error);
+    }
+};

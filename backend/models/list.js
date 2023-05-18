@@ -10,10 +10,10 @@ const listSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    taskOrder:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Task'
-    }]
+    taskOrder:{
+        type:Array,
+        default:[]
+    }
 });
 const List = mongoose.model('List', listSchema);
 

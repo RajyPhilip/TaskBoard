@@ -1,45 +1,30 @@
-import React, { useState,useRef,useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { Draggable } from 'react-beautiful-dnd';
 
-const Task = ({list,tasks,setTasks}) => {
-   
+const Task = ({ tasks, index }) => {
     
-    // functions
-    const fetchTasks = async () => {
-        try {
-        const token = localStorage.getItem("token");
-        const response = await axios.post(`http://localhost:8000/task/all/${list._id}`, {
-            token,
-        });
-        setTasks(response.data.tasks);
-        } catch (error) {
-        console.error("Error fetching lists:", error);
-        }
-    }; 
+  const handleDeleteTask = (e) => {
+    e.preventDefault();
+    console.log("Delete task", tasks);
+  };
 
-    useEffect(() => {
-        fetchTasks();
-    }, []);
-
-    return (
-        <>
-        {
-            tasks && tasks.map((item)=>{
-                return(
-                    <div key={item._id} className="checkUncheck-task">
-                        <input type="checkbox"  />
-                        <p>{item.title}</p>
-                    </div>
-                )
-            })
-        }
-        </>
-    )
-}
+  return (
+    <Draggable draggableId={tasks._id} index={index}>
+      {(provided) => (
+        <div
+          className='task'
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <div className="checkUncheck-task">
+            <input onClick={handleDeleteTask} type="checkbox" />
+            <p>{tasks.title}</p>
+          </div>
+        </div>
+      )}
+    </Draggable>
+  );
+};
 
 export default Task;
-
-<div className="checkUncheck-task">
-            <input type="checkbox"  />
-            <p>Task 1</p>
-        </div>
