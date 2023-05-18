@@ -18,7 +18,7 @@ const Home = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(`http://localhost:8000/create_list`, { title, token });
-      console.log('res',response.data)
+
       setList([...list, response.data.data]);
     } catch (error) {
       console.error("Error creating list:", error);

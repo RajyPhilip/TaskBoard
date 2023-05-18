@@ -1,0 +1,6 @@
+.delete-task-btn{
+    background-color: rgb(228, 62, 62);
+}
+.delete-task-btn:hover{
+    background-color: red;
+}

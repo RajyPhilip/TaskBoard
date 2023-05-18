@@ -142,7 +142,7 @@ module.exports.updateTaskOrder = async (req, res, next) => {
 // update task status 
 module.exports.updateTaskStatus = async (req, res, next) => {
     try {
-        console.log('reached')
+        
         const taskId = req.body.taskId;
         const listId = req.body.listId;
         
@@ -169,14 +169,48 @@ module.exports.updateTaskStatus = async (req, res, next) => {
         await List.findByIdAndUpdate(listId,{
             taskOrder:updatedOrder
         }) ;
-        console.log('hhhhh')
+        
         
         return res.status(200).json({ success: true, message: "Task status updated successfully" ,data:updatedOrder});
     } catch (error) {
         next(error);
     }
 };
+//deletion of completed task in a list 
+module.exports.deleteCompletedTasks = async (req, res, next) => {
+    try {
+        const listId = req.body.listId;
+      // Find the list
+        const list = await List.findById(listId);
+        if (!list) {
+            return res.status(404).json({ error: 'List not found' });
+        }
+      // Get the task order from the list
+        const taskOrder = list.taskOrder;
+      // Filter completed tasks from the task order
+    const incompleteTasks = await Promise.all(taskOrder.map(async taskId => {
+        const task = await Task.findById(taskId);
+        return task && !task.completed ? taskId : null;
+    }));
+    
+  // Remove null values from incompleteTasks array
+    const filteredIncompleteTasks = incompleteTasks.filter(taskId => taskId !== null);
 
+        
+    
+      // Delete completed tasks from the database
+        await Task.deleteMany({ _id: { $in: taskOrder.filter(taskId => !incompleteTasks.includes(taskId)) } });
+    
+      // Update the list with the new task order
+        await List.findByIdAndUpdate(listId, {
+            taskOrder: filteredIncompleteTasks
+        });
+        
+        res.json({ message: 'Completed tasks deleted and task order updated',data :filteredIncompleteTasks});
+    } catch (error) {
+        next(error);
+    }
+};
 
 
 

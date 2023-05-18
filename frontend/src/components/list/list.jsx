@@ -1,35 +1,49 @@
 import React, { useRef } from "react";
 import { Droppable } from 'react-beautiful-dnd';
 import axios from "axios";
-import Task from '../task/task';
+import Task from '../task/task';import './style.css'
 
 const List = ({ list, fullList, setList }) => {
-  const taskTitle = useRef();
-
-
-  const handleAddTask = async (e) => {
+    const taskTitle = useRef();
+    
+// functions
+    const handleAddTask = async (e) => {
+        e.preventDefault();
+        const title = taskTitle.current.value;
+        const listId = list._id;
+        const token = localStorage.getItem("token");
+        try {
+            const response = await axios.post(`http://localhost:8000/create_task/${listId}`, {
+                token,
+                name: title,
+            });
+            const newTask = response.data.data;
+            const updatedList = [...fullList];
+            const listIndex = updatedList.findIndex((li) => li._id === list._id);
+            updatedList[listIndex].taskOrder.push(newTask);
+            setList(updatedList);
+        // Clear the input field
+            taskTitle.current.value = "";
+        } catch (error) {
+            console.error("Error creating task:", error);
+        }
+};
+const handleDeleteTasks = async (e) => {
     e.preventDefault();
-    const title = taskTitle.current.value;
     const listId = list._id;
     const token = localStorage.getItem("token");
-    
     try {
-        const response = await axios.post(`http://localhost:8000/create_task/${listId}`, {
+        const response = await axios.post(`http://localhost:8000/deleteCompletedTasks`, {
             token,
-            name: title,
+            listId
         });
-
-        const newTask = response.data.data;
-        const updatedList = [...fullList];
-        const listIndex = updatedList.findIndex((li) => li._id === list._id);
-        updatedList[listIndex].taskOrder.push(newTask);
-        setList(updatedList);
-      // Clear the input field
-        taskTitle.current.value = "";
+        const newCurrentList = response.data.data;
+        
     } catch (error) {
-        console.error("Error creating task:", error);
+        console.error("Error deleting tasks:", error);
     }
-};
+  };
+
 
     return (
         <div className="List-container">
@@ -55,6 +69,11 @@ const List = ({ list, fullList, setList }) => {
                     ref={taskTitle}
                 />
                 <button className="add-task-btn" type="submit">Add Task to List</button>
+                </form>
+            </div>
+            <div className="add-task-container">
+                <form onSubmit={handleDeleteTasks} className="add-task-form">
+                <button className="delete-task-btn" type="submit">Delete Completed Tasks</button>
                 </form>
             </div>
         </div>

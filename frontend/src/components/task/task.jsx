@@ -20,7 +20,7 @@ const Task = ({ tasks, index ,fullList,setList}) => {
             )
             let data = response.data.data ;
             fullList[index].taskOrder = data ;
-            console.log('hhhh',fullList)
+            
             setList([...fullList]);
         } catch (error) {
             console.error("Error creating list:", error);

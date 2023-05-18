@@ -11,6 +11,8 @@ router.post('/list/all',verifyToken,UserController.getAllList);
 router.post('/task/all/:id',verifyToken,UserController.getAllTaskOfList);
 router.post('/list/updateTaskOrder',verifyToken,UserController.updateTaskOrder);
 router.post('/updateStatus',verifyToken,UserController.updateTaskStatus);
+router.post('/deleteCompletedTasks',verifyToken,UserController.deleteCompletedTasks);
+
 
 
 module.exports = router ;
