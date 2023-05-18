@@ -7,7 +7,7 @@ const Task = ({ tasks, index ,fullList,setList}) => {
     const [checked, setChecked] = useState(tasks.completed);
 
     const handleCheck = async(e) => {
-        e.preventDefault();
+        e.preventDefault(); 
         const newChecked = !checked;
         setChecked(newChecked)
         try {

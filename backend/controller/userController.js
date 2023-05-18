@@ -159,7 +159,7 @@ module.exports.updateTaskStatus = async (req, res, next) => {
         if (!list) {
             return res.status(404).json({ success: false, message: "List not found" });
         }
-        const taskIndex = list.taskOrder.findIndex((item) => item._id.toString() === taskId);
+        const taskIndex = list.taskOrder.findIndex ((item) => item._id.toString() === taskId);
         if (taskIndex === -1) {
             return res.status(404).json({ success: false, message: "Task not found in the list" });
         }
