@@ -1,0 +1,73 @@
+.login-page {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 85vh;
+background-color: #ebeff2;
+}
+
+.login-content {
+width: 400px;
+background-color: #fff;
+padding: 30px;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+font-size: 30px;
+font-weight: bold;
+margin-bottom: 20px;
+text-align: center;
+}
+
+.login-form {
+display: flex;
+flex-direction: column;
+}
+
+input[type='text'],
+input[type='password'] {
+padding: 10px;
+margin-bottom: 20px;
+border: 1px solid #ddd;
+border-radius: 5px;
+}
+
+button {
+padding: 10px 20px;
+font-size: 18px;
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+button:hover {
+background-color: #0056b3;
+}
+
+.additional-links {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+}
+
+.signup-link,
+.forgot-password-link {
+font-size: 14px;
+}
+
+.signup-link a,
+.forgot-password-link a {
+color: #007bff;
+text-decoration: none;
+}
+
+.signup-link a:hover,
+.forgot-password-link a:hover {
+text-decoration: underline;
+}

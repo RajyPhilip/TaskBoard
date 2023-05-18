@@ -1,0 +1,60 @@
+.landing-page {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.landing-page h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: rgb(238, 143, 130);
+    letter-spacing: .5px;
+}
+
+.landing-page p {
+    font-size: 20px;
+    margin-bottom: 40px;
+    color: red;
+}
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    gap: 10px;
+    padding: 10px;
+}
+
+.feature {
+    flex: 1;
+    padding: 20px;
+    background-color: #9386cd;
+    border-radius: 5px;
+}
+
+.feature h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    /* color: white; */
+}
+.feature p {
+    color: rgb(255, 255, 255) !important;
+    letter-spacing: .5px;
+    font-style: italic;
+    color: black;
+}
+
+.landing-page button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.landing-page button:hover {
+    background-color: #0056b3;
+}

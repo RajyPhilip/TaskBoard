@@ -1,0 +1,51 @@
+.create-list-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+.createList-btn{
+    margin: 10px;
+    height: 40px;
+}
+.List-main-container{
+    display: flex;
+    overflow-x: auto;
+}
+
+.List-container{
+    padding: 20px;
+    
+}
+.List-container h3{
+    text-align: center;
+    width: 300px;
+    background-color: rgb(204, 191, 191);
+    border-bottom: 1px solid black;
+}
+.task-container{
+    background-color: rgb(240, 215, 215);
+    height: 300px;
+    width: 300px;
+    overflow: scroll;
+    margin-top: -15px;
+}
+.task-container::-webkit-scrollbar {
+    display: none;
+}
+.checkUncheck-task{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 5px;
+}
+
+
+.add-task-form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.add-task-btn{
+    margin-top: -10px;
+}
