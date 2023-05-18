@@ -121,10 +121,7 @@ module.exports.getAllTaskOfList =async (req, res, next) => {
 // update order
 module.exports.updateTaskOrder = async (req, res, next) => {
     try {
-        console.log('reeeaachhed')
         const { sourceListId, destinationListId, sourceOrder, destinationOrder } = req.body;
-        console.log("#REQ>BODY",req.body)
-        
       // Update the source list's task order
         const source = await List.findById({_id : sourceListId});
         source.taskOrder = sourceOrder;
@@ -141,3 +138,48 @@ module.exports.updateTaskOrder = async (req, res, next) => {
         next(error);
     }
 };
+
+// update task status 
+module.exports.updateTaskStatus = async (req, res, next) => {
+    try {
+        console.log('reached')
+        const taskId = req.body.taskId;
+        const listId = req.body.listId;
+        
+        const task = await Task.findById(taskId);
+        if (!task) {
+            return res.status(404).json({ success: false, message: "Task not found" });
+        }
+        
+        const currentVal = task.completed;
+        task.completed = !currentVal;
+        await task.save();
+        
+        const list = await List.findById(listId);
+        if (!list) {
+            return res.status(404).json({ success: false, message: "List not found" });
+        }
+        const taskIndex = list.taskOrder.findIndex((item) => item._id.toString() === taskId);
+        if (taskIndex === -1) {
+            return res.status(404).json({ success: false, message: "Task not found in the list" });
+        }
+        
+        list.taskOrder[taskIndex].completed = !currentVal;
+        const updatedOrder = list.taskOrder.toObject() ;
+        await List.findByIdAndUpdate(listId,{
+            taskOrder:updatedOrder
+        }) ;
+        console.log('hhhhh')
+        
+        return res.status(200).json({ success: true, message: "Task status updated successfully" ,data:updatedOrder});
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
+
+
+

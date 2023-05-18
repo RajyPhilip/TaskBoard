@@ -10,8 +10,7 @@ router.post('/create_task/:listID',verifyToken,UserController.createTask);
 router.post('/list/all',verifyToken,UserController.getAllList);
 router.post('/task/all/:id',verifyToken,UserController.getAllTaskOfList);
 router.post('/list/updateTaskOrder',verifyToken,UserController.updateTaskOrder);
-
-
+router.post('/updateStatus',verifyToken,UserController.updateTaskStatus);
 
 
 module.exports = router ;

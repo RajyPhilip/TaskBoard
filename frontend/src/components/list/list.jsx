@@ -5,7 +5,7 @@ import Task from '../task/task';
 
 const List = ({ list, fullList, setList }) => {
   const taskTitle = useRef();
-console.log('fullList',list)
+
 
   const handleAddTask = async (e) => {
     e.preventDefault();
@@ -14,26 +14,24 @@ console.log('fullList',list)
     const token = localStorage.getItem("token");
     
     try {
-      const response = await axios.post(`http://localhost:8000/create_task/${listId}`, {
-        token,
-        name: title,
-      });
-      
-      const newTask = response.data.data;
-      const updatedList = [...fullList];
-      const listIndex = updatedList.findIndex((li) => li._id === list._id);
-      updatedList[listIndex].taskOrder.push(newTask);
-      
-      setList(updatedList);
-      
-      // Clear the input field
-      taskTitle.current.value = "";
-    } catch (error) {
-      console.error("Error creating task:", error);
-    }
-  };
+        const response = await axios.post(`http://localhost:8000/create_task/${listId}`, {
+            token,
+            name: title,
+        });
 
-  return (
+        const newTask = response.data.data;
+        const updatedList = [...fullList];
+        const listIndex = updatedList.findIndex((li) => li._id === list._id);
+        updatedList[listIndex].taskOrder.push(newTask);
+        setList(updatedList);
+      // Clear the input field
+        taskTitle.current.value = "";
+    } catch (error) {
+        console.error("Error creating task:", error);
+    }
+};
+
+    return (
         <div className="List-container">
             <div>
                 <h3>{list.name}</h3>
@@ -42,7 +40,7 @@ console.log('fullList',list)
                 {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps} className="task-container">
                     {list.taskOrder.map((item, index) => (
-                    <Task key={item._id} index={index} tasks={item} />
+                    <Task fullList={fullList} setList={setList} key={item._id} index={index} tasks={item} />
                     ))}
                     {provided.placeholder}
                 </div>
@@ -53,6 +51,7 @@ console.log('fullList',list)
                 <input
                     type="text"
                     placeholder="Add Task"
+                    required
                     ref={taskTitle}
                 />
                 <button className="add-task-btn" type="submit">Add Task to List</button>

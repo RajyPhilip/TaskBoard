@@ -71,6 +71,7 @@ const Home = () => {
 
     // Move the task from the source list to the destination list
     const taskToMove = sourceList.taskOrder.splice(source.index, 1)[0];
+    taskToMove.list = destinationListId ;
     destinationList.taskOrder.splice(destination.index, 0, taskToMove);
 
     // Update the list state with the modified lists
@@ -100,7 +101,7 @@ const Home = () => {
       <DragDropContext onDragEnd={handleDrag}>
         <div className="create-list-form-container">
           <form className="create-list-form" onSubmit={handleListCreation}>
-            <input type="text" placeholder="Create list" ref={title} />
+            <input type="text" placeholder="Create list" required ref={title} />
             <button className="createList-btn" type="submit">Create List</button>
           </form>
         </div>
